@@ -1,0 +1,14 @@
+name: Linting the python app
+on:
+  push:
+    paths: "*.py"
+
+jobs:
+  code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v7
+      - name: Install linter
+        run: pip install ruff
+        
