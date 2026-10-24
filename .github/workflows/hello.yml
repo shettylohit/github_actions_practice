@@ -3,12 +3,15 @@
 #Steps
 #Actions
 
-name: First jobs
-on: workflow_dispatch
 
+name: Hello 
+on: push
 jobs:
-  say_hello:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print Hello world
-        run: echo "Hello world"
+    greet:
+        name: Greet
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout 
+              uses: action/checkout@v7
+            - name: Print 
+              run: echo "Hello from GitHub Actions!"
