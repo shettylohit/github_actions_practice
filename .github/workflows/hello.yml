@@ -16,9 +16,9 @@ jobs:
             - name: Print 
               run: echo "Hello from GitHub Actions!"
             - name: Print Date and Time
-              run: date
+              run: datessss
             - name: Print the name of the branch that triggered the run
-              run: echo ${{ github.ref_name }}
+              run: echo ${{ github.ref_name }} 
             - name: List the fiels in repo 
               run: ls -lrta
             - name: Print the runner operating system
