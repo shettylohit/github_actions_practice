@@ -17,6 +17,7 @@ on:
   job-2:
     name: Job-2
     runs-on: windows-latest
+    steps:
       - name: Checkout
         uses: actions/checkout@v7
         run: |
