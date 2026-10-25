@@ -1,21 +1,49 @@
 name: Hello
 
 on:
-  # pull_request:
+  # pull_request: # Trigger for pull request 
   #   types: [opened, synchronize]
   #   branches:
   #     - master
 
+  # workflow_dispatch:
+
+  # push:   # Trigger when pusged to main branch 
+  #   branches:
+  #     - master
+
+  # schedule:   # Cron trigger every 15 Min 
+  #   - cron: '*/15 * * * *'
+
   workflow_dispatch:
+    inputs:
+      run-tests:
+        description: "Run tests?"
+        type: boolean
+        required: true
+      test-type:
+        description: "Type of test to run"
+        type: choice
+        options:
+          - unit
+          - integration
+          - all
+        required: true
+      environment:
+        description: "Choose an environment"
+        type: environment
+        required: true
+      build-number:
+        description: "Custom build number"
+        type: number
+        required: false
+      message:
+        description: "Additional message"
+        type: string
+        required: false
 
-  push:
-    branches:
-      - master
 
-  schedule:
-    - cron: '*/15 * * * *'
-
-jobs:
+  jobs:
   greet:
     name: Greet
     runs-on: ubuntu-latest
