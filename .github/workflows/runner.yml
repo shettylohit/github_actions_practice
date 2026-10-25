@@ -2,7 +2,7 @@ name: Multiple jobs
 
 on:
   workflow_dispatch:
-
+jobs:
   job-1:
     name: Job-1
     runs-on: ubuntu-latest
