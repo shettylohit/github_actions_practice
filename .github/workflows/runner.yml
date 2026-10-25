@@ -17,6 +17,9 @@ jobs:
       - name: Print version of installed apps
         run: |
           echo "Docker version: $(docker --version)"
+          echo "Python version: $(python --version)"
+          echo "Node version: $(node --version)"
+          echo "Git version: $(git --version)"
 #   job-2:
 #     name: Job-2
 #     runs-on: windows-latest
