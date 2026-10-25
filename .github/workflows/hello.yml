@@ -45,15 +45,14 @@ on:
   #       type: string
   #       required: false
 jobs:
+  deploy:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-20.04, windows-latest]
+        images: [hello-world, alpine]
+    runs-on: '${{ matrix.os }}'
   greet:
     name: Greet
-    deploy:
-      strategy:
-        matrix:
-          os: [ubuntu-latest, ubuntu-20.04, windows-latest]
-          images: [hello-world, alpine]
-      runs-on: '${{ matrix.os }}'
-
     environment: ${{ inputs.environment }}
 
 
