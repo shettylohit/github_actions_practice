@@ -1,9 +1,3 @@
-#WorkFlow
-#Jobs
-#Steps
-#Actions
-
-
 name: Hello
 
 on:
