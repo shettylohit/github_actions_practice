@@ -58,3 +58,22 @@ jobs:
 
       - name: Print PR branch
         run: 'echo "PR check running for branch: ${{ github.head_ref }}"'
+        
+      - name: Print workflow inputs
+        run: |
+          echo "Run tests: ${{ inputs.run-tests }}"
+          echo "Test type: ${{ inputs.test-type }}"
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Build number: ${{ inputs.build-number }}"
+          echo "message: ${{ inputs.message }}"
+
+
+      # Perform action based on Input
+      - name: Run tests (if selected)
+        if: ${{ input.run-tests == true }}
+        run: echo "Testing ........."
+
+
+      # Deploy to the chosen environment
+      - name: Deploy to ${{ inputs.environment }}
+        environment: ${{ inputs.environment }}
