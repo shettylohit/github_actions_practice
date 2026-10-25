@@ -89,7 +89,8 @@ jobs:
       - name: Deploy to ${{ inputs.environment }}
         run: echo "Deploying to ${{ inputs.environment }}"
 
-        
+# fail-fast: false allows all jobs to complete regardless of failures.
+# fail-fast: true means if one matrix job fails, GitHub Actions cancels all the other matrix jobs that are still running.
       - name: Simulate failure
         if: matrix.os == 'ubuntu-latest' && matrix.images == 'hello-world'
         run: |
