@@ -5,7 +5,16 @@
 
 
 name: Hello 
-on: push
+on:
+    pull_request:
+      types|:
+        - opened
+        - closed
+        - updated
+      branches:
+        - main  
+
+
 jobs:
     greet:
         name: Greet
@@ -18,7 +27,7 @@ jobs:
             - name: Print Date and Time
               run: datessss
             - name: Print the name of the branch that triggered the run
-              run: echo ${{ github.ref_name }} 
+              run: echo "PR check running for branch" ${{ github.ref_name }} 
             - name: List the fiels in repo 
               run: ls -lrta
             - name: Print the runner operating system
