@@ -41,9 +41,7 @@ on:
           description: "Additional message"
           type: string
           required: false
-
-
-  jobs:
+jobs:
   greet:
     name: Greet
     runs-on: ubuntu-latest
