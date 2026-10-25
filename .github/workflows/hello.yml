@@ -48,6 +48,8 @@ jobs:
   greet:
     name: Greet
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
 
     steps:
       - name: Checkout
@@ -76,5 +78,4 @@ jobs:
 
       # Deploy to the chosen environment
       - name: Deploy to ${{ inputs.environment }}
-        environment: ${{ inputs.environment }}
         run: echo "Deploying to ${{ inputs.environment }}"
