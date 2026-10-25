@@ -24,7 +24,7 @@ jobs:
             - name: Print Date and Time
               run: date
             - name: Print the name of the branch that triggered the run
-              run: echo "PR check running for branch" ${{ github.ref_name }} 
+              run: echo "PR check running for branch" ${{ github.ref_name }}"
             - name: List the fiels in repo 
               run: ls -lrta
             - name: Print the runner operating system
