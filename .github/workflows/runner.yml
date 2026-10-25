@@ -14,26 +14,28 @@ jobs:
           echo "OS Name: $(uname -s)"
           echo "Runner Hostname: $(hostname)"
           echo "Current User: $(whoami)"
-
-  job-2:
-    name: Job-2
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-      - name: Print info
+      - name: Print version of installed apps
         run: |
-          echo "OS Name: $(uname -s)"
-          echo "Runner Hostname: $(hostname)"
-          echo "Current User: $(whoami)"
-  job-3:
-    name: Job-3
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-      - name: Print info
-        run: |
-          echo "OS Name: $(uname -s)"
-          echo "Runner Hostname: $(hostname)"
-          echo "Current User: $(whoami)"
+          echo "Docker version: $(docker --version)"
+#   job-2:
+#     name: Job-2
+#     runs-on: windows-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v7
+#       - name: Print info
+#         run: |
+#           echo "OS Name: $(uname -s)"
+#           echo "Runner Hostname: $(hostname)"
+#           echo "Current User: $(whoami)"
+#   job-3:
+#     name: Job-3
+#     runs-on: macos-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v7
+#       - name: Print info
+#         run: |
+#           echo "OS Name: $(uname -s)"
+#           echo "Runner Hostname: $(hostname)"
+#           echo "Current User: $(whoami)"
