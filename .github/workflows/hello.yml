@@ -1,31 +1,22 @@
-#WorkFlow
-#Jobs
-#Steps
-#Actions
+name: Hello
 
-
-name: Hello 
 on:
   pull_request:
     types: [opened, synchronize]
     branches:
-      - main
-
+      - master
 
 jobs:
-    greet:
-        name: Greet
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout 
-              uses: actions/checkout@v7
-            - name: Print 
-              run: echo "Hello from GitHub Actions!"
-            - name: Print Date and Time
-              run: date
-            - name: Print the name of the branch that triggered the run
-              run: echo "PR check running for branch" ${{ github.ref_name }}"
-            - name: List the fiels in repo 
-              run: ls -lrta
-            - name: Print the runner operating system
-              run: cat /etc/os-release
+  greet:
+    name: Greet
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Print greeting
+        run: echo "Hello from GitHub Actions! Part 2"
+
+      - name: Print PR branch
+        run: 'echo "PR check running for branch: ${{ github.head_ref }}"'
