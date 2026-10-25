@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Print greeting
-        run: echo "Hello from GitHub Actions!"
+        run: echo "Hello from GitHub Actions! Part 2"
 
       - name: Print PR branch
         run: 'echo "PR check running for branch: ${{ github.head_ref }}"'
