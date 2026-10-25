@@ -18,8 +18,5 @@ jobs:
       - name: Print greeting
         run: echo "Hello from GitHub Actions!"
 
-      - name: Print Date and Time
-        run: date
-
       - name: Print PR branch
         run: 'echo "PR check running for branch: ${{ github.head_ref }}"'
