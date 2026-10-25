@@ -48,9 +48,14 @@ jobs:
   greet:
     name: Greet
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, ubuntu-20.04, windows-latest]
         images: [hello-world, alpine]
+        exclude:     # Excluding specific combination
+          - images: alpine
+            os: windows-latest
+
     runs-on: '${{ matrix.os }}'
     environment: ${{ inputs.environment }}
 
@@ -83,3 +88,10 @@ jobs:
       # Deploy to the chosen environment
       - name: Deploy to ${{ inputs.environment }}
         run: echo "Deploying to ${{ inputs.environment }}"
+
+        
+      - name: Simulate failure
+        if: matrix.os == 'ubuntu-latest' && matrix.images == 'hello-world'
+        run: |
+          echo "Intentionally failing this matrix job"
+          exit 1
