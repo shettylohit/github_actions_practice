@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      - name: Print info
         run: |
           echo "OS Name: $(uname -s)"
           echo "Runner Hostname: $(hostname)"
@@ -20,6 +21,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      - name: Print info
         run: |
           echo "OS Name: $(uname -s)"
           echo "Runner Hostname: $(hostname)"
@@ -30,6 +32,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      - name: Print info
         run: |
           echo "OS Name: $(uname -s)"
           echo "Runner Hostname: $(hostname)"
