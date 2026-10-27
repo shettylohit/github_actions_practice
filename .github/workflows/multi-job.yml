@@ -63,8 +63,8 @@ jobs:
 
         steps:
             - name: Print Current date
-            id: time
-            run: echo "date=$(date)" >> "$GITHUB_OUTPUT"
+              id: time
+              run: echo "date=$(date)" >> "$GITHUB_OUTPUT"
 
     print_date:
         name: Print date output from previous job
@@ -73,7 +73,7 @@ jobs:
 
         steps:
             - name: Print the date from previous job
-            run: echo "Date from previous job is ${{ needs.date_job.outputs.current_date }}"
+              run: echo "Date from previous job is ${{ needs.date_job.outputs.current_date }}"
 
 
 
