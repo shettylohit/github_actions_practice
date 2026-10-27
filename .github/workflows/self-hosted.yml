@@ -1,4 +1,4 @@
-name: Multiple jobs
+name: Self Hosted jobs
 
 on:
   workflow_dispatch:
