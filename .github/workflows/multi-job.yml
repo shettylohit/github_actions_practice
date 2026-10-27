@@ -93,8 +93,28 @@ jobs:
         run: echo "This step runs first"
 
       - name: Build application
-        run: echo "Hi"
+        run: exit 1
 
       - name: Run only if previous step failed
         if: failure()
         run: echo "The previous step failed!"
+
+
+  contunue_on_error:
+    name: Steps run even if previous step fails
+    runs-on: ubuntu-latest
+    steps:
+      - name: First step
+        run: echo "Starting build"
+
+      - name: Step that may fail
+        continue-on-error: true
+        run: |
+          echo "Running a command that will fail"
+          exit 1
+
+      - name: Next step
+        run: echo "This step still runs!"
+
+      - name: Final step
+        run: echo "Workflow continues successfully"
