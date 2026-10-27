@@ -84,3 +84,17 @@ jobs:
       - name: Run steps on main branch
         if: github.ref == 'refs/heads/master'
         run: echo "Deploying from main branch"
+
+  fail_function:
+    name: Steps run only if previous step fails
+    runs-on: ubuntu-latest
+    steps:
+      - name: Successful step
+        run: echo "This step runs first"
+
+      - name: Build application
+        run: exit 1
+
+      - name: Run only if previous step failed
+        if: failure()
+        run: echo "The previous step failed!"
