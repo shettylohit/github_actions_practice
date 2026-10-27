@@ -141,10 +141,10 @@ jobs:
     steps:
       - name: Main branch push
         if: github.ref == 'refs/heads/master'
-        run: echo "This is a push to the main branch"
+        run: echo "This is a push to the master branch"
 
       - name: Feature branch push
-        if: github.ref != 'refs/heads/main'
+        if: github.ref != 'refs/heads/feature'
         run: echo "This is a push to a feature branch"
 
       - name: Print commit message
