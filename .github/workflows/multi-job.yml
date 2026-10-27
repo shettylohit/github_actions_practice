@@ -149,26 +149,3 @@ jobs:
 
       - name: Print commit message
         run: echo "Commit message: ${{ github.event.head_commit.message }}"
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Task 5: Putting It Together
-Create .github/workflows/smart-pipeline.yml that:
-
-Triggers on push to any branch
-Has a lint job and a test job running in parallel
-Has a summary job that runs after both, prints whether it's a main branch push or a feature branch push, and prints the commit message
