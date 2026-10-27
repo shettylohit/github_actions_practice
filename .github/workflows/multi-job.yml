@@ -136,7 +136,7 @@ jobs:
 
   summary:
     name: Summary Job
-    needs: [lint, test]
+    needs: ["lint", "test"]
     runs-on: ubuntu-latest
     steps:
       - name: Main branch push
