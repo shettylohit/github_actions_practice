@@ -25,26 +25,26 @@ jobs:
           echo $ENVIRONMENT
           echo $VERSION
 
-#   test:
-#     name: Test
-#     needs: build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v7
-#       - name: Test
-#         run: |
-#           echo "Testing Application"
-#   deploy:
-#     name: deploy
-#     needs: Test
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v7
-#       - name: Deploy
-#         run: |
-#           echo "Deploying application"
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Test
+        run: |
+          echo "Testing Application"
+  deploy:
+    name: deploy
+    needs: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Deploy
+        run: |
+          echo "Deploying application"
   print:
     name: Printing ENV
     runs-on: ubuntu-latest
