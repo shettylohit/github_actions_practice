@@ -1,1 +1,16 @@
+name: Multiple jobs
 
+on:
+  workflow_dispatch:
+jobs:
+  job-1:
+    name: Job-1
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Print info
+        run: |
+          echo "OS Name: $(uname -s)"
+          ls -l
+          touch /home/ec2-user/test1.txt
