@@ -1,0 +1,62 @@
+name: Multiple jobs
+
+on:
+  workflow_dispatch:
+env:    ## WorkFlow LEVEL ENV
+  APP_NAME: myapp
+
+jobs:
+  build:
+    env:
+        ENVIRONMENT: staging  ## Job LEVEL ENV
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Build
+        env:
+            VERSION: 1.0.0
+        run: |
+          echo "Building Application"
+      - name: Print Env
+        run: |
+          echo env.APP_NAME
+          echo $APP_NAME
+          echo env.ENVIRONMENT
+          echo $ENVIRONMENT
+          echo env.VERSION
+          echo $VERSION
+
+  test:
+    name: Test
+    need: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Test
+        run: |
+          echo "Testing Application"
+  deploy:
+    name: deploy
+    needs: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Deploy
+        run: |
+          echo "Deploying application"
+  print:
+    name: Printing ENV
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print all env
+        run: |
+          echo env.APP_NAME
+          echo $APP_NAME
+          echo env.ENVIRONMENT
+          echo $ENVIRONMENT
+          echo env.VERSION
+          echo $VERSION
