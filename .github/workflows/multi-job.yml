@@ -79,7 +79,7 @@ jobs:
 
   step_function:
     name: Steps run only for main branch 
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Run steps on main branch
         if: github.ref == 'refs/heads/main'
