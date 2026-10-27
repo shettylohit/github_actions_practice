@@ -1,4 +1,4 @@
-name: Multiple jobs
+name: OS jobs
 
 on:
   workflow_dispatch:

@@ -82,5 +82,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run steps on main branch
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         run: echo "Deploying from main branch"
