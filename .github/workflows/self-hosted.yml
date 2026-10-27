@@ -5,7 +5,7 @@ on:
 jobs:
   job-1:
     name: Job-1
-    runs-on: self-hosted
+    runs-on: [self-hosted, my-linux-runner]
     steps:
       - name: Checkout
         uses: actions/checkout@v7
