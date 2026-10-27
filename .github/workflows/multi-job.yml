@@ -93,7 +93,7 @@ jobs:
         run: echo "This step runs first"
 
       - name: Build application
-        run: exit 1
+        run: echo "Hi"
 
       - name: Run only if previous step failed
         if: failure()
