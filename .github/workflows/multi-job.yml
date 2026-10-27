@@ -136,7 +136,7 @@ jobs:
 
   summary:
     name: Summary Job
-    needs: lint
+    needs: ["lint", "test"]
     runs-on: ubuntu-latest
     steps:
       - name: Main branch push
@@ -148,4 +148,4 @@ jobs:
         run: echo "This is a push to a feature branch"
 
       - name: Print commit message
-        run: echo "Commit message: ${{ github.event.head_commit.message }}"
+        run: echo "Commit message ${{ github.event.head_commit.message }}"
