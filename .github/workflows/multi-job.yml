@@ -1,7 +1,7 @@
 name: Multiple jobs
 
-on:
-  workflow_dispatch:
+on: push
+  # workflow_dispatch:
 env:    ## WorkFlow LEVEL ENV
   APP_NAME: myapp
 
@@ -118,3 +118,57 @@ jobs:
 
       - name: Final step
         run: echo "Workflow continues successfully"
+
+  lint:
+    name: Lint Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint Job
+        run: echo "Linting the code"
+
+  test:
+    name: Test Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Job
+        run: echo "Testing the code"
+
+
+  summary:
+    name: Summary Job
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Main branch push
+        if: github.ref == 'refs/heads/main'
+        run: echo "This is a push to the main branch"
+
+      - name: Feature branch push
+        if: github.ref != 'refs/heads/main'
+        run: echo "This is a push to a feature branch"
+
+      - name: Print commit message
+        run: echo "Commit message: ${{ github.event.head_commit.message }}"
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Task 5: Putting It Together
+Create .github/workflows/smart-pipeline.yml that:
+
+Triggers on push to any branch
+Has a lint job and a test job running in parallel
+Has a summary job that runs after both, prints whether it's a main branch push or a feature branch push, and prints the commit message
