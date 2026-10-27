@@ -55,25 +55,25 @@ jobs:
 #           echo $ENVIRONMENT
 #           echo $VERSION
 
-date_job:
-  name: Printing date
-  runs-on: ubuntu-latest
-  outputs:
-    current_date: ${{ steps.time.outputs.date }}
+    date_job:
+    name: Printing date
+    runs-on: ubuntu-latest
+    outputs:
+        current_date: ${{ steps.time.outputs.date }}
 
-  steps:
-    - name: Print Current date
-      id: time
-      run: echo "date=$(date)" >> "$GITHUB_OUTPUT"
+    steps:
+        - name: Print Current date
+        id: time
+        run: echo "date=$(date)" >> "$GITHUB_OUTPUT"
 
-print_date:
-  name: Print date output from previous job
-  runs-on: ubuntu-latest
-  needs: date_job
+    print_date:
+    name: Print date output from previous job
+    runs-on: ubuntu-latest
+    needs: date_job
 
-  steps:
-    - name: Print the date from previous job
-      run: echo "Date from previous job is ${{ needs.date_job.outputs.current_date }}"
+    steps:
+        - name: Print the date from previous job
+        run: echo "Date from previous job is ${{ needs.date_job.outputs.current_date }}"
 
 
 
