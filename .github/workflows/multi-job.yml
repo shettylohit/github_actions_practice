@@ -126,7 +126,7 @@ jobs:
       - name: Lint Job
         run: echo "Linting the code"
 
-  test:
+  test-1:
     name: Test Job
     runs-on: ubuntu-latest
     steps:
