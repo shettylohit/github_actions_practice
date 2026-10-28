@@ -1,15 +1,45 @@
-name: Pythonb app
+
+name: Python app
+
 on:
-    workflow_dispatch
+  workflow_dispatch:
 
 jobs:
-    code-checkout:
-        name: code-checkout
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v7
-          - name: Installing flask
-            run: python3 -m pip install flask
-          - name: Run the application
-            run: python3 app.py
+  code-checkout:
+    name: Code checkout and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install Flask
+        run: python3 -m pip install flask
+
+      - name: Start Flask application
+        run: |
+          python3 app.py > flask.log 2>&1 &
+          echo $! > flask.pid
+
+      - name: Wait for Flask to start
+        run: |
+          for i in {1..10}; do
+            if curl -fsS http://127.0.0.1:5000/health; then
+              echo
+              echo "Flask is running!"
+              exit 0
+            fi
+            sleep 2
+          done
+          cat flask.log
+          exit 1
+
+      - name: Test home page
+        run: curl -fsS http://127.0.0.1:5000/
+
+      - name: Stop Flask application
+        if: always()
+        run: |
+          if [ -f flask.pid ]; then
+            kill "$(cat flask.pid)" 2>/dev/null || true
+          fi
