@@ -1,3 +1,7 @@
+Node Application 
+[![Node Application](https://github.com/shettylohit/github_actions_practice/actions/workflows/node_application.yml/badge.svg)](https://github.com/shettylohit/github_actions_practice/actions/workflows/node_application.yml)
+
+
 Project structure
 ```
 express-task-manager/
