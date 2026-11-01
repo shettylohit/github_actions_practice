@@ -8,3 +8,5 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v7
+      - name: List all folders
+        run: ls -lrta
