@@ -1,5 +1,8 @@
 name: Python Application
 on: push
+defaults:
+  run:
+    working-directory: python_app
 
 jobs:
   code:
@@ -8,5 +11,5 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v7
-      - name: List all folders
+      - name: List all the filesd
         run: ls -lrta
