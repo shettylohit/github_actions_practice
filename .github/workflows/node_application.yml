@@ -32,6 +32,6 @@ jobs:
        - name: Docker Push
          uses: docker/build-push-action@v7
          with: 
-           context:
+           context: ./node_app
            push: true   
            tags: ${{ secrets.DOCKER_USERNAME }}/90days:${{ github.sha }}
