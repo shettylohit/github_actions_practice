@@ -20,4 +20,4 @@ jobs:
          with:
           context: .     
           push: false    
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/90days:${{ github.sha}}
+          tags: ${{ secrets.DOCKER_USERNAME }}/90days:${{ github.sha}}
