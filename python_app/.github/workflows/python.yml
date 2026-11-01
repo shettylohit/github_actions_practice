@@ -1,1 +1,10 @@
-hello
+name: Python Application
+on: push
+
+jobs:
+  code:
+    name: Code Checkout
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v7
