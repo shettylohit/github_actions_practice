@@ -1,0 +1,84 @@
+# Trigger on pull_request to main
+# Add a job file-size-check that:
+# Checks out the code
+# Fails if any file in the PR is larger than 1 MB
+# Add a job branch-name-check that:
+# Reads the branch name from ${{ github.head_ref }}
+# Fails if it doesn't follow the pattern feature/*, fix/*, or docs/*
+# Add a job pr-body-check that:
+# Reads the PR body: ${{ github.event.pull_request.body }}
+# Warns (but doesn't fail) if the PR description is empty
+
+
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  file-size-check:
+    name: file-size-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # need history to diff against the base commit
+
+      - name: Fail if any changed file is larger than 1 MB
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          limit=$((1024 * 1024))
+          failed=0
+
+          # Files added/modified/renamed in the PR (deleted files are skipped)
+          while IFS= read -r -d '' file; do
+            size=$(stat -c%s "$file")
+            if [ "$size" -gt "$limit" ]; then
+              echo "::error file=$file::$file is $size bytes (limit: $limit bytes / 1 MB)"
+              failed=1
+            fi
+          done < <(git diff --name-only -z --diff-filter=d "$BASE_SHA...$HEAD_SHA")
+
+          if [ "$failed" -eq 1 ]; then
+            echo "One or more files exceed 1 MB."
+            exit 1
+          fi
+          echo "All changed files are within the 1 MB limit."
+
+  branch-name-check:
+    name: branch-name-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch name
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          echo "Branch: $HEAD_REF"
+          if [[ "$HEAD_REF" =~ ^(feature|fix|docs)/.+ ]]; then
+            echo "Branch name is valid."
+          else
+            echo "::error::Branch '$HEAD_REF' is invalid. Use feature/*, fix/*, or docs/*."
+            exit 1
+          fi
+
+  pr-body-check:
+    name: pr-body-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Warn if PR description is empty
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          # Strip all whitespace so a body of only spaces/newlines counts as empty
+          trimmed=$(echo "$PR_BODY" | tr -d '[:space:]')
+          if [ -z "$trimmed" ]; then
+            echo "::warning::This PR has no description. Please explain what changed and why."
+          else
+            echo "PR description found."
+          fi

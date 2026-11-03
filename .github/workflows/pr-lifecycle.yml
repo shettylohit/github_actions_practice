@@ -32,4 +32,11 @@ jobs:
               echo "Event type fired: ${{ github.event.action }}"
               echo "PR title: ${{ github.event.pull_request.title }}"
               echo "PR author: ${{ github.event.pull_request.user.login }}"
+              echo "Source Branch: ${{ github.event.pull_request.head.ref }}"
+              echo "Target Branch: ${{ github.event.pull_request.base.ref }}"
 
+            - name: Main branch push
+              if: github.event.action == 'closed' && github.event.pull_request.merged == true
+              run: |
+                echo "New code merged to master branch"
+                echo "PR successfully merged."
