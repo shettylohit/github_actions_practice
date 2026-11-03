@@ -1,0 +1,35 @@
+name: External Trigger
+
+on:
+  repository_dispatch:
+    types: [deploy-request]
+
+permissions:
+  contents: read
+
+jobs:
+  handle-dispatch:
+    runs-on: ubuntu-latest
+    env:
+      # Passed via env (not inlined in the script) because the payload is external input
+      TARGET_ENV: ${{ github.event.client_payload.environment }}
+    steps:
+      - name: Print event details
+        run: |
+          echo "Event type:  ${{ github.event.action }}"
+          echo "Environment: ${TARGET_ENV:-<not provided>}"
+
+      - name: Print full client payload
+        env:
+          PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+        run: echo "$PAYLOAD"
+
+      - name: Validate environment
+        run: |
+          case "$TARGET_ENV" in
+            staging|production)
+              echo "Deploy request accepted for $TARGET_ENV" ;;
+            *)
+              echo "::error::Invalid or missing environment '$TARGET_ENV' (expected staging or production)"
+              exit 1 ;;
+          esac

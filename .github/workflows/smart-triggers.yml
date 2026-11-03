@@ -1,0 +1,21 @@
+name: Smart Triggers (paths-ignore)
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+    paths-ignore:
+      - '*.md'       # Markdown files in the repo root only
+      - 'docs/**'    # Anything under docs/
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Show what triggered this run
+        run: |
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Triggered because at least one changed file is NOT a doc"

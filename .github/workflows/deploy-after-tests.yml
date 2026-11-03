@@ -1,0 +1,44 @@
+name: Deploy After Tests
+
+on:
+  workflow_run:
+    workflows: ["Run Tests"]   # must match the `name:` in tests.yml, not the filename
+    types: [completed]
+    branches: [main]           # only deploy when the tested push was to main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      # workflow_run executes in the context of the default branch,
+      # so explicitly check out the exact commit that was tested.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Deploy
+        env:
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          echo "Tests succeeded on $HEAD_BRANCH ($HEAD_SHA)"
+          echo "Deploying..."
+          # Add your real deploy steps here
+
+  skipped-notice:
+    name: skipped-notice
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion != 'success' }}
+    steps:
+      - name: Warn and stop
+        env:
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+        run: |
+          echo "::warning::Deployment skipped: 'Run Tests' finished with '$CONCLUSION'. See $RUN_URL"
+          exit 0

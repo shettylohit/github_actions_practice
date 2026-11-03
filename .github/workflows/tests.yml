@@ -1,0 +1,16 @@
+name: Run Tests   # deploy-after-tests.yml matches on this exact name
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Replace with your real test command (npm test, pytest, go test ./..., etc.)
+      - name: Run tests
+        run: |
+          echo "Running tests for ${{ github.sha }}..."
+          echo "All tests passed."
