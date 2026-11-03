@@ -1,0 +1,35 @@
+# k 1: Pull Request Event Types
+# Create .github/workflows/pr-lifecycle.yml that triggers on pull_request with specific activity types:
+
+# Trigger on: opened, synchronize, reopened, closed
+# Add steps that:
+# Print which event type fired: ${{ github.event.action }}
+# Print the PR title: ${{ github.event.pull_request.title }}
+# Print the PR author: ${{ github.event.pull_request.user.login }}
+# Print the source branch and target branch
+# Add a conditional step that only runs when the PR is merged (closed + merged = true)
+# Test it: create a PR, push an update to it, then merge it. Watch the workflow fire each time with a different event type.
+
+
+
+name: Hello
+
+on:
+  pull_request: 
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - master
+
+jobs:
+    print_events:
+        name: Prints the evenys 
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout the code
+            uses: actions/checkout@v7
+          - name: Print events fired
+            runs: |
+              echo "Event type fired: ${{ github.event.action }}"
+              echo "PR title: ${{ github.event.pull_request.title }}"
+              echo "PR author: ${{ github.event.pull_request.user.login }}"
+
