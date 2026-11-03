@@ -12,31 +12,33 @@
 
 
 
-name: PR lif4ecycle
+name: PR Lifecycle
 
 on:
-  pull_request: 
+  pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - master
 
 jobs:
-    print_events:
-        name: Prints the evenys 
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout the code
-            uses: actions/checkout@v7
-          - name: Print events fired
-            run: |
-              echo "Event type fired: ${{ github.event.action }}"
-              echo "PR title: ${{ github.event.pull_request.title }}"
-              echo "PR author: ${{ github.event.pull_request.user.login }}"
-              echo "Source Branch: ${{ github.event.pull_request.head.ref }}"
-              echo "Target Branch: ${{ github.event.pull_request.base.ref }}"
+  print_events:
+    name: Print PR Events
+    runs-on: ubuntu-latest
 
-            - name: Main branch push
-              if: github.event.action == 'closed' && github.event.pull_request.merged == true
-              run: |
-                echo "New code merged to master branch"
-                echo "PR successfully merged."
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Print event details
+        run: |
+          echo "Event type fired: ${{ github.event.action }}"
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          echo "PR author: ${{ github.event.pull_request.user.login }}"
+          echo "Source branch: ${{ github.event.pull_request.head.ref }}"
+          echo "Target branch: ${{ github.event.pull_request.base.ref }}"
+
+      - name: Check if PR is merged
+        if: github.event.action == 'closed' && github.event.pull_request.merged == true
+        run: |
+          echo "New code merged to master branch"
+          echo "PR successfully merged."
