@@ -1,0 +1,22 @@
+name: Greet
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      # Required so the local action exists on the runner
+      - uses: actions/checkout@v7
+
+      - name: Run setup-and-greet
+        id: greet
+        uses: ./.github/actions/setup-and-greet
+        with:
+          name: Octocat
+          language: es
+
+      - name: Check output
+        run: echo "greeted = ${{ steps.greet.outputs.greeted }}"

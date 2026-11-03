@@ -1,0 +1,64 @@
+# Create a custom composite action in your repo at .github/actions/setup-and-greet/action.yml:
+
+# Define inputs: name and language (default: en)
+# Add steps that:
+# Print a greeting in the specified language
+# Print the current date and runner OS
+# Set an output called greeted with value true
+# Use the composite action in a new workflow with uses: ./.github/actions/setup-and-greet
+
+
+#You need to create two separate files for this task:
+
+# .github/actions/setup-and-greet/action.yml — defines your custom composite action.
+
+# .github/workflows/action-workflow.yml — calls and uses your composite action.
+
+
+name: Setup and Greet
+description: Greets a person in the chosen language, prints the date and runner OS, and sets an output.
+
+inputs:
+  name:
+    description: Name of the person to greet
+    required: true
+  language:
+    description: "Greeting language (en, es, fr, de, hi)"
+    required: false
+    default: en
+
+outputs:
+  greeted:
+    description: Set to "true" once the greeting has been printed
+    value: ${{ steps.set-output.outputs.greeted }}
+
+runs:
+  using: composite
+  steps:
+    - name: Print greeting
+      shell: bash
+      env:
+        INPUT_NAME: ${{ inputs.name }}
+        INPUT_LANGUAGE: ${{ inputs.language }}
+      run: |
+        case "$INPUT_LANGUAGE" in
+          en) greeting="Hello" ;;
+          es) greeting="Hola" ;;
+          fr) greeting="Bonjour" ;;
+          de) greeting="Hallo" ;;
+          hi) greeting="Namaste" ;;
+          *)  greeting="Hello"
+              echo "Unsupported language '$INPUT_LANGUAGE', falling back to English." ;;
+        esac
+        echo "$greeting, $INPUT_NAME!"
+
+    - name: Print date and runner OS
+      shell: bash
+      run: |
+        echo "Current date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo "Runner OS: ${{ runner.os }}"
+
+    - name: Set output
+      id: set-output
+      shell: bash
+      run: echo "greeted=true" >> "$GITHUB_OUTPUT"
