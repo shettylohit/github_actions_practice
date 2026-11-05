@@ -1,4 +1,4 @@
-name: Flask app
+name: Flask App
 
 on:
   workflow_call:
