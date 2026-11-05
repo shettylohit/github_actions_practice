@@ -1,0 +1,30 @@
+name: Flask app
+
+on:
+  workflow_call:
+    inputs:
+      flask_version:
+        description: 'Version of Flask'
+        type: number
+        required: true
+        default: 3.1.2
+
+      run_test:
+        description: 'Run test'
+        type: string
+        required: true
+defaults:
+  run:
+    working-directory: python_flask
+
+jobs:
+  code-checkout:
+    - name: Code checkout and test
+      runs-on: ubuntu-latest
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
