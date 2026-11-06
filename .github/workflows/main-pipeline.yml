@@ -5,7 +5,9 @@ on: workflow_dispatch
   # push:
   #   branches:
   #     - main
-
+defaults:
+  run:
+    working-directory: ./python_flask
 jobs:
 
   # Job 1: Build and Test
