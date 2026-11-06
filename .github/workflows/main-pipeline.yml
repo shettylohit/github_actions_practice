@@ -1,10 +1,10 @@
 
 name: Main Branch Production Pipeline
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
 
