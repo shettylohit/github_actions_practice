@@ -6,7 +6,8 @@ on:
   # push:
   #   branches:
   #     - main
-
+permissions:
+  contents: read
 jobs:
   # Job 1: Build and Test
   build_test:

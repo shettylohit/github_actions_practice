@@ -13,6 +13,8 @@ on:
         description: 'Run test'
         type: string
         required: true
+permissions:
+  contents: read
 defaults:
   run:
     working-directory: python_flask

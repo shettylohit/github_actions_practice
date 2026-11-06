@@ -29,7 +29,8 @@ on:
       image_url:
         description: 'Full Docker Image URL'
         value: ${{ jobs.build.outputs.image_url }}
-
+permissions:
+  contents: read
 jobs:
   build:
     name: Build and Push Image

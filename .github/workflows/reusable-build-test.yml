@@ -20,7 +20,8 @@ on:
       test_result:
         description: 'Test execution result'
         value: ${{ jobs.build.outputs.test_result }}
-
+permissions:
+  contents: read
 jobs:
   build:
     name: Build and Test Flask App
@@ -35,7 +36,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
