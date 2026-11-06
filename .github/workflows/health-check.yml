@@ -1,0 +1,54 @@
+
+name: Scheduled Docker Health Check
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  health_check:
+    name: Check Flask Application Health
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pull Latest Docker Image
+        run: |
+          docker pull ${{ secrets.docker_username }}/90days/flask-capstone:latest
+
+      - name: Run Docker Container
+        run: |
+          docker run -d \
+            --name flask-health-check \
+            -p 5000:5000 \
+            ${{ secrets.docker_username }}/90days/flask-capstone:latest
+
+      - name: Wait for Application Startup
+        run: sleep 5
+
+      - name: Check Health Endpoint
+        id: health
+        run: |
+          if curl --fail --silent http://localhost:5000/health; then
+            echo "Health check PASSED"
+            echo "status=PASSED" >> "$GITHUB_OUTPUT"
+          else
+            echo "Health check FAILED"
+            echo "status=FAILED" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+
+      - name: Create Health Check Summary
+        if: always()
+        run: |
+          echo "## Health Check Report" >> $GITHUB_STEP_SUMMARY
+          echo "- Image: ${{ secrets.docker_username }}/90days/flask-capstone:latest" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: ${{ steps.health.outputs.status || 'FAILED' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Time: $(date)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Stop and Remove Container
+        if: always()
+        run: |
+          docker stop flask-health-check || true
+          docker rm flask-health-check || true

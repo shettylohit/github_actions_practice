@@ -1,0 +1,42 @@
+
+name: Main Branch Production Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  # Job 1: Build and Test
+  build_test:
+    name: Build and Test
+    uses: ./.github/workflows/reusable-build-test.yml
+    with:
+      python_version: '3.12'
+      run_tests: true
+
+  # Job 2: Docker Build and Push
+  docker_build_push:
+    name: Docker Build and Push
+    needs: build_test
+    uses: ./.github/workflows/reusable-docker.yml
+    with:
+      image_name: flask-capstone
+      tag: latest
+    secrets:
+      docker_username: ${{ secrets.docker_username }}
+      docker_token: ${{ secrets.docker_token }}
+
+  # Job 3: Deploy to Production
+  deploy:
+    name: Deploy to Production
+    needs: docker_build_push
+    runs-on: ubuntu-latest
+
+    environment: production
+
+    steps:
+      - name: Deploy Docker Image
+        run: |
+          echo "Deploying image: ${{ needs.docker_build_push.outputs.image_url }} to production"
