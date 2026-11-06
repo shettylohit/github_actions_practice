@@ -1,3 +1,15 @@
+# GitHub Actions Capstone
+
+![PR Pipeline](https://github.com/shettylohit/github-actions-capstone/actions/workflows/pr-pipeline.yml/badge.svg)
+
+![Main Pipeline](https://github.com/shettylohit/github-actions-capstone/actions/workflows/main-pipeline.yml/badge.svg)
+
+![Reusable Build Test](https://github.com/shettylohit/github-actions-capstone/actions/workflows/reusable-build-test.yml/badge.svg)
+
+![Docker Build Push](https://github.com/shettylohit/github-actions-capstone/actions/workflows/reusable-docker.yml/badge.svg)
+
+![Health Check](https://github.com/shettylohit/github-actions-capstone/actions/workflows/health-check.yml/badge.svg)
+
 ## Python Flask + SQLite
 
 This version is the easiest to understand if you're learning backend development.
