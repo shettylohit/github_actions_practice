@@ -34,7 +34,7 @@ jobs:
   build:
     name: Build and Push Image
     runs-on: ubuntu-latest
-    
+
 
     outputs:
       image_url: ${{ steps.image.outputs.image_url }}
@@ -52,7 +52,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./python_flask
           file: ./python_flask/Dockerfile
           push: true
           tags: ${{ secrets.docker_username }}/90days/${{ inputs.image_name }}:${{ inputs.tag }}
