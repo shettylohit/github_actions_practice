@@ -55,9 +55,9 @@ jobs:
           context: ./python_flask
           file: ./python_flask/Dockerfile
           push: true
-          tags: ${{ secrets.docker_username }}/90days/${{ inputs.image_name }}:${{ inputs.tag }}
+          tags: ${{ secrets.docker_username }}/${{ inputs.image_name }}:${{ inputs.tag }}
 
       - name: Set Image URL
         id: image
         run: |
-          echo "image_url=${{ secrets.docker_username }}/90days/${{ inputs.image_name }}:${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+          echo "image_url=${{ secrets.docker_username }}/${{ inputs.image_name }}:${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
